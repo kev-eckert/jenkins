@@ -1,13 +1,5 @@
 pipeline {
-  agent {
-    kubernetes {
-      defaultContainer 'alpine:latest'
-      yamlFile 'KubernetesPod.yaml'
-    }
-  }
-    
-//pipeline {
-//    agent any
+    agent any
     
     environment {
         // Variables d'environnement globales
@@ -20,9 +12,10 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh 'whoami'
-                sh 'echo SECRET : ${SECRET} > /tmp/secret'
-                sh 'cat /tmp/secret'
+                sh 'echo ${MY_ENV_VAR}'
+                sh 'echo SECRET : ${SECRET}'
                 sh 'cat /etc/os-release'
+                runUnitTests()
             }
         }
         stage('Test') {
@@ -36,4 +29,9 @@ pipeline {
             }
         }
     }
+}
+
+def runUnitTests() {
+   // executes tests
+  sh 'echo run unit tests...'
 }
