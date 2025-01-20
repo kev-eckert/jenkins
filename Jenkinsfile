@@ -8,9 +8,13 @@ pipeline {
     
     stages {
         stage('Build') {
+            agent {
+                docker 'alpine:latest'
+            }
             steps {
                 echo 'Building..'
                 sh 'whoami'
+                sh 'cat /etc/os-release'
             }
         }
         stage('Test') {
