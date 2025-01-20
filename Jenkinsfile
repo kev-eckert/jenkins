@@ -4,6 +4,7 @@ pipeline {
     environment {
         // Variables d'environnement globales
         MY_ENV_VAR = 'production'
+        SECRET = credentials('secret')  // Utilise le credential 'secret'
     }
     
     stages {
@@ -14,6 +15,7 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh 'whoami'
+                sh 'echo SECRET : ${SECRET}'
                 sh 'cat /etc/os-release'
             }
         }
