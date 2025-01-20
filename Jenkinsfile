@@ -2,11 +2,10 @@ pipeline {
     agent any
     
     environment {
-        // Variables d'environnement globales
-        MY_ENV_VAR = 'production'
-        SECRET = credentials('secret')  // Utilise le credential 'secret'
+        KUBECONFIG = /tmp/kubeconfig.yml
+        KUBECONFIG_FILE = credentials('k8s-credentials') // Use your Kubernetes credentials ID
     }
-    
+
     stages {
         stage('Installing kubectl') {
             steps {
@@ -15,29 +14,13 @@ pipeline {
                 sh './kubectl version'
             }
         }
-        stage('Build') {
+        stage('Setup KUBECONFIG') {
             steps {
-                echo 'Building..'
-                sh 'echo ${MY_ENV_VAR}'
-                sh 'echo SECRET : ${SECRET}'
-                sh 'cat /etc/os-release'
-                runUnitTests()
+                sh 'env'
+                sh 'cat ${KUBECONFIG_FILE} > ${KUBECONFIG}'
+                sh './kubectl --kubeconfig /tmp/kubeconfig.yml get nodes'
             }
         }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
+        
     }
-}
-
-def runUnitTests() {
-   // executes tests
-  sh 'echo run unit tests...'
 }
