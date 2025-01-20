@@ -8,10 +8,16 @@ pipeline {
     }
     
     stages {
+        stage('Installing kubectl') {
+            steps {
+                sh 'curl -LO https://dl.k8s.io/release/$(curl -Ls https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl'
+                sh 'chmod +x ./kubectl'
+                sh 'sudo mv ./kubectl /usr/local/bin/kubectl'
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building..'
-                sh 'apt-get update'
                 sh 'echo ${MY_ENV_VAR}'
                 sh 'echo SECRET : ${SECRET}'
                 sh 'cat /etc/os-release'
