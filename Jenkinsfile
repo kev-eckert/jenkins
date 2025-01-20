@@ -1,6 +1,11 @@
 pipeline {
     agent any
-
+    
+    environment {
+        // Variables d'environnement globales
+        MY_ENV_VAR = 'production'
+    }
+    
     stages {
         stage('Build') {
             steps {
