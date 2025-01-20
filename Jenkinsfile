@@ -11,7 +11,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                sh 'whoami'
+                sh 'apt-get update'
                 sh 'echo ${MY_ENV_VAR}'
                 sh 'echo SECRET : ${SECRET}'
                 sh 'cat /etc/os-release'
