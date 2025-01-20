@@ -1,5 +1,13 @@
 pipeline {
-    agent any
+  agent {
+    kubernetes {
+      defaultContainer 'alpine:latest'
+      yamlFile 'KubernetesPod.yaml'
+    }
+  }
+    
+//pipeline {
+//    agent any
     
     environment {
         // Variables d'environnement globales
@@ -9,9 +17,6 @@ pipeline {
     
     stages {
         stage('Build') {
-            agent {
-                kubernetes 'alpine:latest'
-            }
             steps {
                 echo 'Building..'
                 sh 'whoami'
