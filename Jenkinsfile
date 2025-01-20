@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Build') {
             agent {
-                docker 'alpine:latest'
+                kubernetes 'alpine:latest'
             }
             steps {
                 echo 'Building..'
