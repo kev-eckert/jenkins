@@ -15,7 +15,8 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh 'whoami'
-                sh 'echo SECRET : ${SECRET}'
+                sh 'echo SECRET : ${SECRET} > /tmp/secret'
+                sh 'cat /tmp/secret'
                 sh 'cat /etc/os-release'
             }
         }
