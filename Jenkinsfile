@@ -20,11 +20,13 @@ pipeline {
                 sh './kubectl version'
             }
         }
-        stage('Setup KUBECONFIG') {
+        
+        stage('Test') {
+            when {
+                expression { params.RUN_TESTS }
+            }
             steps {
-                sh 'env'
-                sh 'cat ${KUBECONFIG_FILE} > ${KUBECONFIG}'
-                sh './kubectl --kubeconfig /tmp/kubeconfig.yml get nodes'
+                echo 'Exécution des tests...'
             }
         }
         
