@@ -1,6 +1,12 @@
 pipeline {
     agent any
     
+    parameters {
+        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Nom de la branche à construire')
+        booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Exécuter les tests')
+        choice(name: 'DEPLOY_ENV', choices: ['dev', 'staging', 'prod'], description: 'Choisissez l’environnement de déploiement')
+    }
+    
     environment {
         KUBECONFIG = /tmp/kubeconfig.yml
         KUBECONFIG_FILE = credentials('k8s-credentials') // Use your Kubernetes credentials ID
